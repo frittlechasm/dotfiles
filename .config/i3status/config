@@ -1,0 +1,98 @@
+# i3status configuration file.
+# see "man i3status" for documentation.
+
+# It is important that this file is edited as UTF-8.
+# The following line should contain a sharp s:
+# ß
+# If the above line is not correctly displayed, fix your editor first!
+
+general {
+        output_format = "i3bar"
+        colors = false
+        markup = pango
+        interval = 5
+        color_good = '#2f343f'
+        color_degraded = '#ebcb8b'
+        color_bad = '#ba5e57'
+}
+
+order += "disk /"
+# order += "ipv6"
+order += "cpu_usage"
+# order += "disk /home"
+order += "wireless _first_"
+#order += "ethernet _first_"
+order += "battery all"
+# order += "load"
+order += "cpu_temperature 0"
+order += "memory"
+order += "tztime local"
+
+cpu_usage {
+        #format = " cpu  %usage "
+        format = "<span background='#50fa7b'>  </span><span background='#e5e9f0'> %usage </span>"
+}
+
+cpu_temperature 0 {
+        format = "<span background='#bf616a'>  </span><span background='#e5e9f0'> %degrees°C </span>"
+        #path = "/sys/class/thermal/thermal_zone0/temp"
+}
+
+load {
+        #format = " load %1min "
+        # max_threshold = 0.3
+        format = "<span background='#50fa7b'>  </span><span background='#e5e9f0'> %5min Load </span>"
+}
+
+disk "/" {
+        # format = " hdd %avail "
+        #format = " ⛁ %avail "
+	format = "<span background='#fec7cd'>  </span><span background='#e5e9f0'> %free Left </span>"
+}
+
+ethernet _first_ {
+# if you use %speed, i3status requires root privileges
+        #format_up = " lan: %ip %speed "
+        #format_down = " no lan "
+        format_up = "<span background='#88c0d0'>  </span><span background='#e5e9f0'> %ip </span>"
+        format_down = "<span background='#88c0d0'>  </span><span background='#e5e9f0'> Disconnected </span>"
+}
+
+wireless _first_ {
+        format_up = "<span background='#bd93f9'>  </span><span background='#e5e9f0'> %essid | %ip </span>"
+        format_down = "<span background='#bd93f9'>  </span><span background='#e5e9f0'> -- </span>"
+}
+
+battery all {
+        # format = "%status %percentage %remaining %emptytime"
+        #format = " %status %percentage"
+        format = "<span background='#a3be8c'>  </span><span background='#e5e9f0'> %percentage %status </span>"
+        format_down = "No battery"
+        last_full_capacity = true
+        integer_battery_capacity = true
+        # status_chr = ""
+        status_chr = "⚡"
+        # status_bat = "bat"
+        # status_bat = "☉"
+        status_bat = ""
+        # status_unk = "?"
+        status_unk = ""
+        # status_full = ""
+        status_full = "☻"
+        low_threshold = 15
+        threshold_type = time
+}
+
+memory {
+        #format = "%used | %available"
+        format = "<span background='#e8a36a'>  </span><span background='#e5e9f0'> %used | %available </span>"
+        threshold_degraded = "1G"
+        format_degraded = "MEMORY < %available"
+}
+
+tztime local {
+        # format = "%Y-%m-%d %H:%M:%S"
+        #format = " %d.%m. %H:%M "
+  	format = "<span background='#81a1c1'> %time </span>"
+  	format_time = "%a %-d %b %I:%M %p"
+}
